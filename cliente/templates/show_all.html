@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Operaciones Numeros</title>
+</head>
+<body>
+    <form action="{{ url_for('send') }}" method="POST">
+        
+         <div align="center">
+            <h3>Operaciones Numeros</h3>
+            Numero1<input type="text" name="numero1" id="numero1"/> Numero2<input type="text" name="numero2" id="numero2"/>
+            <br><input type="submit" name="action" value="+"/><input type="submit" name="action" value="-"/><input type="submit" name="action" value= "*"/><input type="submit" name="action" value="div"/><br>
+
+            <p>Resultado: {{ string_variable }} </p>
+        </div> 
+    </form>
+</body>
+</html>
+

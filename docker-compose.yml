@@ -1,0 +1,27 @@
+version: "2"
+services:
+  suma:
+    build: ./suma
+    ports: ["5001:5000"]
+  resta:
+    build: ./resta
+    ports: ["5002:5000"]
+  multiplicacion:
+    build: ./multiplicacion
+    ports: ["5003:5000"]
+  division:
+    build: ./division
+    ports: ["5004:5000"]
+  app:
+    build: ./app
+    ports: ["5005:5000"]
+    depends_on:
+      - suma
+      - resta
+      - multiplicacion
+      - division
+  cliente:
+    build: ./cliente
+    ports: ["80:5000"]
+    depends_on:
+      - app
