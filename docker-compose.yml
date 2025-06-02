@@ -2,7 +2,7 @@ version: "2"
 services:
   suma:
     build: ./suma
-    ports: ["5001:5000"]
+    ports: ["5006:5000"]
   resta:
     build: ./resta
     ports: ["5002:5000"]
