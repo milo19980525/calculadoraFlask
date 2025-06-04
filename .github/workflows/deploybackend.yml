@@ -52,7 +52,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: last
+          IMAGE_TAG: latest
         run: |
           cd multiplicacion
           # Build a docker container and
