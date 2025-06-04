@@ -20,4 +20,4 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # Begin the api in the container
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["suma.py"]
