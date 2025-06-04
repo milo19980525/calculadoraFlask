@@ -1,8 +1,8 @@
 #get image with python 2.7
 FROM python:2.7
 # Install FFmpeg
-RUN apt-get update && \
-    apt-get install -y ffmpeg
+#RUN apt-get update && \
+#    apt-get install -y ffmpeg
 
 # Install aws cli
 #RUN apt-get install -y awscli
