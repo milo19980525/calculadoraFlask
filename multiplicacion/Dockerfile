@@ -7,14 +7,14 @@ RUN apt-get update && \
 # Install aws cli
 RUN apt-get install -y awscli
 
+#Install requierements
+RUN pip install -r requirements.txt
+
 # Copy files to container
 COPY . /app
 
 # Set workdir
 WORKDIR /app
-
-#Install requierements
-RUN pip install -r requirements.txt
 
 # Expose API to port 5000
 EXPOSE 5000
