@@ -11,17 +11,20 @@ name: Deploy to Amazon ECS
 
 on:
   push:
+    paths:
+      - "multiplicacion/**"
     branches:
       - main
+      - feat/ejemplo
 
 env:
-  AWS_REGION: MY_AWS_REGION                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: MY_ECR_REPOSITORY           # set this to your Amazon ECR repository name
-  ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: MY_ECS_CLUSTER                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
+  AWS_REGION: ${{ vars.AWS_DEFAULT_REGION }}                  # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: ${{ vars.ECR_BACKEND_REPOSITORY }}           # set this to your Amazon ECR repository name
+  ECS_SERVICE: ${{ vars.ECS_BACKEND_SERVICE }}                 # set this to your Amazon ECS service name
+  ECS_CLUSTER: ${{ vars.ECS_CLUSTER }}                 # set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION: ${{ vars.ECS_TASK }}  # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: MY_CONTAINER_NAME           # set this to the name of the container in the
+  CONTAINER_NAME: ${{ vars.ECS_CONTAINER }}           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
 
 jobs:
@@ -39,7 +42,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: us-west-1
 
       - name: Login to Amazon ECR
         id: login-ecr

@@ -3,7 +3,7 @@ name: Build and Deploy BackendApp to ECS
 on:
   push:
     paths:
-      - "multiplicacion/**"
+      - "suma/**"
     branches:
       - feat/ejemplo
 
