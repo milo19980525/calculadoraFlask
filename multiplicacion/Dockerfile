@@ -2,5 +2,5 @@ FROM python:2.7
 COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
-ENTRYPOINT ["python"]
-CMD ["multiplicacion.py"]
+EXPOSE 5000
+CMD ["flask", "run", "--host=0.0.0.0"]
