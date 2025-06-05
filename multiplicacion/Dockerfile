@@ -19,6 +19,6 @@ RUN pip install -r requirements.txt
 # Expose API to port 5000
 EXPOSE 5000
 
-RUN chmod +x main /app/multiplicacion.py
+#RUN chmod +x main /app/multiplicacion.py
 #Begin the api in the container
-CMD ["multiplicacion.py"]
+CMD ["/app/multiplicacion.py"]
