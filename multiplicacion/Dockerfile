@@ -14,7 +14,7 @@ COPY . .
 WORKDIR /app
 
 #Install requierements
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Expose API to port 5000
 EXPOSE 5000
