@@ -8,7 +8,7 @@ FROM python:2.7
 #RUN apt-get install -y awscli
 
 # Copy files to container
-COPY . .
+COPY . ./app
 
 # Set workdir
 WORKDIR /app
