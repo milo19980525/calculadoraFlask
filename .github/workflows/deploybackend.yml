@@ -62,34 +62,31 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
-        with:
-          task-definition: ${{ vars.ECS_TASK_DEFINITION }}
-          container-name: ${{ vars.CONTAINER_NAME }}
-          image: ${{ steps.build-image.outputs.image }}
-              
-      - name: Debug rendered task definition
-        run: |
-          echo "Rendered task: ${{ steps.task-def.outputs.task-definition }}"
+            - name: Fill in the new image ID in the Amazon ECS task definition
+              id: task-def
+              uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+              with:
+                task-definition: ${{ vars.ECS_TASK_DEFINITION }}
+                container-name: ${{ vars.CONTAINER_NAME }}
+                image: ${{ steps.build-image.outputs.image }}
       
-      - name: Register new task definition
-        id: register-task
-        run: |
-          echo "Registering rendered task definition..."
-          TASK_DEF_ARN=$(aws ecs register-task-definition --cli-input-json file://${{ steps.task-def.outputs.task-definition }} | jq -r '.taskDefinition.taskDefinitionArn')
-          echo "task-definition-arn=$TASK_DEF_ARN" >> $GITHUB_OUTPUT
+            - name: Register new task definition
+              id: register-task
+              run: |
+                echo "Registering rendered task definition..."
+                TASK_DEF_ARN=$(aws ecs register-task-definition \
+                  --cli-input-json file://${{ steps.task-def.outputs.task-definition }} \
+                  | jq -r '.taskDefinition.taskDefinitionArn')
+                echo "task-definition-arn=$TASK_DEF_ARN" >> $GITHUB_OUTPUT
       
-      - name: Debug new task definition ARN
-        run: |
-          echo "New task definition: ${{ steps.register-task.outputs.task-definition-arn }}"
+            - name: Debug registered task definition ARN
+              run: echo "Registered Task Definition ARN: ${{ steps.register-task.outputs.task-definition-arn }}"
       
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
-        with:
-          task-definition: ${{ steps.register-task.outputs.task-definition-arn }}
-          service: ${{ vars.ECS_SERVICE }}
-          cluster: ${{ vars.ECS_CLUSTER }}
-          wait-for-service-stability: true
-          force-new-deployment: true
+            - name: Deploy Amazon ECS task definition
+              uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+              with:
+                task-definition: ${{ steps.register-task.outputs.task-definition-arn }}
+                service: ${{ vars.ECS_SERVICE }}
+                cluster: ${{ vars.ECS_CLUSTER }}
+                wait-for-service-stability: true
+                force-new-deployment: true
