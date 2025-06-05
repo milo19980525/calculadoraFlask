@@ -8,17 +8,17 @@ FROM python:2.7
 #RUN apt-get install -y awscli
 
 # Copy files to container
-COPY . /app
+COPY . .
 
 # Set workdir
 WORKDIR /app
 
 #Install requierements
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose API to port 5000
 EXPOSE 5000
 
 #RUN chmod +x main /app/multiplicacion.py
 #Begin the api in the container
-CMD ["/app/multiplicacion.py"]
+CMD ["multiplicacion.py"]
