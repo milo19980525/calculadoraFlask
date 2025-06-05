@@ -1,24 +1,18 @@
-#get image with python 2.7
+# Use Python 2.7 base image
 FROM python:2.7
-# Install FFmpeg
-#RUN apt-get update && \
-#    apt-get install -y ffmpeg
 
-# Install aws cli
-#RUN apt-get install -y awscli
-
-# Copy files to container
-COPY . ./app
-
-# Set workdir
+# Set working directory
 WORKDIR /app
 
-#Install requierements
+# Copy all files into container
+COPY . .
+
+# Install requirements
 RUN pip install -r requirements.txt
 
-# Expose API to port 5000
+# Expose port (optional, useful if you're running a web server)
 EXPOSE 5000
 
-#RUN chmod +x main /app/multiplicacion.py
-#Begin the api in the container
-CMD ["multiplicacion.py"]
+# Run your Python script using python
+CMD ["python", "multiplicacion.py"]
+
