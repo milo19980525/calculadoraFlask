@@ -61,6 +61,10 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Download task definition 
+        run: |
+          aws ecs describe-task-definition - task-definition etap-development - query taskDefinition > task-definition.json
       
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -69,20 +73,7 @@ jobs:
           task-definition: ${{ vars.ECS_TASK_DEFINITION }}
           container-name: ${{ vars.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
-      
-      - name: Register new task definition
-        id: register-task
-        run: |
-          echo "Registering rendered task definition..."
-          TASK_DEF_ARN=$(aws ecs register-task-definition \
-            --cli-input-json file://${{ steps.task-def.outputs.task-definition }} \
-            | jq -r '.taskDefinition.taskDefinitionArn')
-          echo "task-definition-arn=$TASK_DEF_ARN" >> $GITHUB_OUTPUT
-      
-      - name: Debug registered task definition ARN
-        run: |
-          echo "Registered Task Definition ARN: ${{ steps.register-task.outputs.task-definition-arn }}"
-      
+           
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
         with:
