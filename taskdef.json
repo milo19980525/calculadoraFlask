@@ -1,15 +1,14 @@
 {
-  "family": "task-multiplicacion3",
+  "family": "task-multiplicacion",
   "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::469511673322:role/ecsTaskExecutionRole",
   "requiresCompatibilities": ["FARGATE"],
-  "cpu": "512",
-  "memory": "1024",
-  "executionRoleArn": "arn:aws:iam::708110116686:role/ecsTaskExecutionRole",
-  "taskRoleArn": "arn:aws:iam::708110116686:role/ecsTaskExecutionRole",
+  "cpu": "1024",
+  "memory": "2048",
   "containerDefinitions": [
     {
       "name": "multiplicacion3",
-      "image": "<IMAGE_NAME>",
+      "image": "IMAGE_URI_PLACEHOLDER",
       "essential": true,
       "portMappings": [
         {
@@ -22,12 +21,9 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/task-multiplicacion3",
-          "awslogs-create-group": "true",
-          "awslogs-region": "us-west-1",
-          "awslogs-stream-prefix": "ecs",
-          "mode": "non-blocking",
-          "max-buffer-size": "25m"
+          "awslogs-group": "/ecs/task-multiplicacion",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
         }
       }
     }
